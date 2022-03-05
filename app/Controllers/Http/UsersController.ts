@@ -7,7 +7,7 @@ import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class UsersController {
   public async store({ request }: HttpContextContract) {
-    await Database.transaction(async (trx) => {
+    const user = await Database.transaction(async (trx) => {
       const { email, password, username, redirectUrl } = await request.validate(StoreValidator)
       const user = new User()
       user.useTransaction(trx)
@@ -22,7 +22,9 @@ export default class UsersController {
         message.subject('Criação de Conta')
         message.htmlView('emails/register', { link })
       })
+      return user
     })
+    return user
   }
 
   public async show({ params }: HttpContextContract) {
