@@ -27,22 +27,25 @@ export default class UsersController {
     return user
   }
 
-  public async show({ params }: HttpContextContract) {
+  public async confirm({ params }: HttpContextContract) {
     const userKey = await UserKey.findByOrFail('key', params.key)
     await userKey.load('user')
     userKey.user.validated = true
     userKey.user.save()
     userKey.delete()
-    return userKey.user
   }
 
   public async update({ request, auth }: HttpContextContract) {
     const user = auth.user!
-    const data = await request.validate(UpdateValidator)
-    user.merge(data)
+    const { name, username, bio, links } = await request.validate(UpdateValidator)
+    let linksJSON = JSON.stringify(links)
+    user.merge({ name, username, bio, links: linksJSON })
     user.save()
     return user
   }
 
-  public async destroy({}: HttpContextContract) {}
+  public async show({ auth }: HttpContextContract) {
+    const user = auth.user!
+    return user
+  }
 }
