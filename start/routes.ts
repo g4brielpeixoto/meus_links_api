@@ -16,8 +16,9 @@ Route.post('/auth', 'AuthController.store')
 Route.delete('/auth', 'AuthController.destroy').middleware('auth')
 
 //ForgotPassword
-Route.post('/forgotPassword', 'ForgotPasswordController.store')
-Route.put('/forgotPassword', 'ForgotPasswordController.update')
+Route.post('/forgot-password', 'ForgotPasswordController.store')
+Route.get('/forgot-password', 'ForgotPasswordController.show')
+Route.put('/forgot-password', 'ForgotPasswordController.update')
 
 //Pages
 Route.get('/:username', 'PagesController.show')
