@@ -12,8 +12,8 @@ export default class UserUpdateValidator {
     links: schema.array().members(
       schema.object().members({
         id: schema.number(),
-        title: schema.string({ trim: true }),
-        url: schema.string({ trim: true }),
+        title: schema.string.nullableAndOptional(),
+        url: schema.string.nullableAndOptional(),
         active: schema.boolean()
       })
     )
