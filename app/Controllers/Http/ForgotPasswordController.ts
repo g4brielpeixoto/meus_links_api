@@ -22,7 +22,7 @@ export default class ForgotPasswordsController {
         await Mail.send((message) => {
           message.to(user.email)
           message.from(`${process.env.SMTP_USERNAME}`, 'Meus Links')
-          message.subject('Criação de Conta')
+          message.subject('Recuperação de senha')
           message.htmlView('emails/forgotPassword', { link, name: user.firstName() })
         })
       }
@@ -32,7 +32,7 @@ export default class ForgotPasswordsController {
   public async show({ params }: HttpContextContract) {
     const userKey = await UserKey.findByOrFail('key', params.key)
     await userKey.load('user')
-    return userKey.user
+    return { userKey: userKey.key, firstName: userKey.user.firstName() }
   }
 
   public async update({ request, response }: HttpContextContract) {
