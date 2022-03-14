@@ -8,7 +8,6 @@ export default class UserUpdateValidator {
       rules.unique({ table: 'users', column: 'username' })
     ]),
     name: schema.string.optional({ trim: true }),
-    bio: schema.string.optional({ trim: true }),
     links: schema.array().members(
       schema.object().members({
         id: schema.number(),

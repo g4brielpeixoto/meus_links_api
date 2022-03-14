@@ -16,9 +16,6 @@ export default class User extends BaseModel {
   public name: string
 
   @column()
-  public bio: string
-
-  @column()
   public validated: boolean
 
   @column({ serialize: (links) => JSON.parse(links) })

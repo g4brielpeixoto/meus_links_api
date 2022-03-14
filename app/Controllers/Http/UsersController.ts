@@ -37,9 +37,9 @@ export default class UsersController {
 
   public async update({ request, auth }: HttpContextContract) {
     const user = auth.user!
-    const { name, username, bio, links } = await request.validate(UpdateValidator)
+    const { name, username, links } = await request.validate(UpdateValidator)
     let linksJSON = JSON.stringify(links)
-    user.merge({ name, username, bio, links: linksJSON })
+    user.merge({ name, username, links: linksJSON })
     user.save()
     return user
   }

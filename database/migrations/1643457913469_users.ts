@@ -11,8 +11,7 @@ export default class UsersSchema extends BaseSchema {
       table.string('username', 180).unique()
       table.string('name', 255)
       table.boolean('validated')
-      table.string('links')
-      table.text('bio', 'longText')
+      table.text('links', 'longText')
       table.string('remember_me_token').nullable()
     })
   }
