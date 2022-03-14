@@ -1,21 +1,19 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import { User } from 'App/Models'
+import { User, Link } from 'App/Models'
 
 export default class PagesController {
-  public async show({ params, response }: HttpContextContract) {
-    const user = await User.query()
-      .where({ username: params.username })
-      .preload('mainLinks', (query) => {
-        query.where('active', true)
-      })
-      .preload('socialLinks')
-      .first()
+  public async show({ params }: HttpContextContract) {
+    const user = await User.findByOrFail('username', params.username)
 
-    if (!user || !user.validated) return response.notFound()
-    return user.serialize({
-      fields: {
-        omit: ['email', 'createdAt', 'updatedAt', 'rememberMeToken', 'validated']
-      }
-    })
+    const links = JSON.parse(user.links) as Array<Link>
+
+    const activeLinks = links.filter((link) => link.active === true)
+
+    return {
+      name: user.name,
+      username: user.username,
+      validated: user.validated,
+      links: activeLinks
+    }
   }
 }
