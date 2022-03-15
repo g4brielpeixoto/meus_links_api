@@ -1,6 +1,7 @@
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasMany, HasMany, computed } from '@ioc:Adonis/Lucid/Orm'
 import { UserKey } from 'App/Models'
+import Env from '@ioc:Adonis/Core/Env'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -17,6 +18,9 @@ export default class User extends BaseModel {
 
   @column()
   public validated: boolean
+
+  @column({ serializeAs: null })
+  public avatar: string
 
   @column({ serialize: (links) => JSON.parse(links) })
   public links: string
@@ -40,5 +44,10 @@ export default class User extends BaseModel {
   @computed()
   public firstName() {
     return this.name.split(' ')[0]
+  }
+
+  @computed()
+  public get avatarUrl(): string {
+    return `${Env.get('APP_URL')}/avatar/${this.avatar}`
   }
 }

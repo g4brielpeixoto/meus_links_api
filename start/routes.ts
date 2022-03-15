@@ -11,6 +11,11 @@ Route.get('/register/:key', 'UsersController.confirm')
 Route.get('/register', 'UsersController.show').middleware('auth')
 Route.put('/register', 'UsersController.update').middleware('auth')
 
+//Avatar
+Route.get('/avatar/:file', 'AvatarController.show')
+Route.put('/avatar', 'AvatarController.update').middleware('auth')
+Route.delete('/avatar', 'AvatarController.destroy').middleware('auth')
+
 //Auth
 Route.post('/auth', 'AuthController.store')
 Route.delete('/auth', 'AuthController.destroy').middleware('auth')
