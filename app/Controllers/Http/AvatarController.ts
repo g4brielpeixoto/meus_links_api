@@ -25,7 +25,7 @@ export default class UserAvatarController {
 
       return user.avatar
     })
-    if (response) return auth.user!.avatarUrl
+    if (response) return { avatar: response, avatarUrl: auth.user!.avatarUrl }
   }
 
   public async destroy({ auth }: HttpContextContract) {
