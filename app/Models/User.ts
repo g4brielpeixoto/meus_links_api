@@ -19,7 +19,7 @@ export default class User extends BaseModel {
   @column()
   public validated: boolean
 
-  @column({ serializeAs: null })
+  @column()
   public avatar: string
 
   @column({ serialize: (links) => JSON.parse(links) })
