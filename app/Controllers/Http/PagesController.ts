@@ -13,7 +13,9 @@ export default class PagesController {
       name: user.name,
       username: user.username,
       validated: user.validated,
-      links: activeLinks
+      links: activeLinks,
+      avatar: user.avatar,
+      avatarUrl: user.avatarUrl
     }
   }
 }
