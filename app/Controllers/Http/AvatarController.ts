@@ -15,7 +15,10 @@ export default class UserAvatarController {
 
       const user = auth.user!.useTransaction(trx)
 
+      if (user.avatar) fs.unlinkSync(Application.tmpPath('uploads', user.avatar))
+
       user.avatar = `${new Date().getTime()}.${file.extname}`
+
       await user.save()
 
       await file.move(Application.tmpPath('uploads'), {
