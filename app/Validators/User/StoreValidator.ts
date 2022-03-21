@@ -12,5 +12,8 @@ export default class UserStoreValidator {
     password: schema.string(),
     redirectUrl: schema.string({ trim: true })
   })
-  public messages = {}
+  public messages = {
+    'username.unique': 'Este apelido já está em uso',
+    'email.unique': 'Este e-mail já está em uso'
+  }
 }
