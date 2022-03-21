@@ -1,7 +1,6 @@
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasMany, HasMany, computed } from '@ioc:Adonis/Lucid/Orm'
 import { UserKey } from 'App/Models'
-import Env from '@ioc:Adonis/Core/Env'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -48,6 +47,6 @@ export default class User extends BaseModel {
 
   @computed()
   public get avatarUrl(): string {
-    return `${Env.get('APP_URL')}/avatar/${this.avatar}`
+    return `https://meus-links-backend.herokuapp.com/register/avatar/${this.avatar}`
   }
 }
