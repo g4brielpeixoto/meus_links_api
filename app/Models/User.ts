@@ -47,6 +47,6 @@ export default class User extends BaseModel {
 
   @computed()
   public get avatarUrl(): string {
-    return `https://meus-links-backend.herokuapp.com/register/avatar/${this.avatar}`
+    return `https://meus-links-backend.herokuapp.com/avatar/${this.avatar}`
   }
 }
