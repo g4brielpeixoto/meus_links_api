@@ -14,6 +14,8 @@ export default class UserStoreValidator {
   })
   public messages = {
     'username.unique': 'Este apelido já está em uso',
-    'email.unique': 'Este e-mail já está em uso'
+    'email.unique': 'Este e-mail já está em uso',
+    'email': 'E-mail inválido',
+    'required': `O campo {{field}} não foi preenchido corretamente`
   }
 }
