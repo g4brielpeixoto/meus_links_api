@@ -7,7 +7,10 @@ export default class PagesController {
 
     const links = JSON.parse(user.links) as Array<Link>
 
-    const activeLinks = links.filter((link) => link.active === true)
+    let activeLinks = [{}]
+
+    if (links) activeLinks = links.filter((link) => link.active === true)
+    else activeLinks = []
 
     return {
       name: user.name,
