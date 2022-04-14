@@ -47,6 +47,7 @@ export default class User extends BaseModel {
 
   @computed()
   public get avatarUrl(): string {
-    return `https://meus-links-backend.herokuapp.com/avatar/${this.avatar}`
+    if (process.env.NODE_ENV === 'development') return `http://localhost:3333/avatar/${this.avatar}`
+    else return `https://meus-links-backend.herokuapp.com/avatar/${this.avatar}`
   }
 }
