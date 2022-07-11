@@ -1,8 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { AvatarValidator } from 'App/Validators/User'
 import Application from '@ioc:Adonis/Core/Application'
-import Database from '@ioc:Adonis/Lucid/Database'
-import fs from 'fs'
 
 export default class UserAvatarController {
   public async show({ params, response }: HttpContextContract) {
@@ -10,34 +8,15 @@ export default class UserAvatarController {
   }
 
   public async update({ request, auth }: HttpContextContract) {
-    const response = await Database.transaction(async (trx) => {
-      const { file } = await request.validate(AvatarValidator)
-
-      const user = auth.user!.useTransaction(trx)
-
-      if (user.avatar) fs.unlinkSync(Application.tmpPath('uploads', user.avatar))
-
-      user.avatar = `${new Date().getTime()}.${file.extname}`
-
-      await user.save()
-
-      await file.move(Application.tmpPath('uploads'), {
-        name: user.avatar,
-        overwrite: true
-      })
-
-      return user.avatar
-    })
-    if (response) return { avatar: response, avatarUrl: auth.user!.avatarUrl }
+    const { base64 } = await request.validate(AvatarValidator)
+    const user = auth.user!
+    user.avatar = base64
+    await user.save()
   }
 
   public async destroy({ auth }: HttpContextContract) {
-    await Database.transaction(async (trx) => {
-      const user = auth.user!.useTransaction(trx)
-
-      fs.unlinkSync(Application.tmpPath('uploads', user.avatar))
-      user.avatar = ''
-      await user.save()
-    })
+    const user = auth.user!
+    user.avatar = ''
+    await user.save()
   }
 }
